@@ -2,9 +2,9 @@
 
 namespace Ihasan\BagistoWishlistShare\Events;
 
+use Ihasan\BagistoWishlistShare\Models\WishlistShare;
 use Illuminate\Foundation\Events\Dispatchable;
 use Illuminate\Queue\SerializesModels;
-use Ihasan\BagistoWishlistShare\Models\WishlistShare;
 
 class WishlistShared
 {

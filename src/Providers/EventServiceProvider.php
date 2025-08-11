@@ -2,9 +2,9 @@
 
 namespace Ihasan\BagistoWishlistShare\Providers;
 
-use Illuminate\Foundation\Support\Providers\EventServiceProvider as ServiceProvider;
 use Ihasan\BagistoWishlistShare\Events\WishlistShared;
 use Ihasan\BagistoWishlistShare\Listeners\LogWishlistShare;
+use Illuminate\Foundation\Support\Providers\EventServiceProvider as ServiceProvider;
 
 class EventServiceProvider extends ServiceProvider
 {

@@ -24,7 +24,7 @@ return [
     'show-qr-code' => 'Show QR Code',
     'hide-qr-code' => 'Hide QR Code',
     'scan-qr-code' => 'Scan this QR code to view the wishlist',
-    
+
     // Messages
     'empty-wishlist' => 'Your wishlist is empty. Add some products first!',
     'share-created' => 'Wishlist share created successfully!',
@@ -32,10 +32,10 @@ return [
     'share-not-found' => 'Wishlist share not found or expired.',
     'error-creating-share' => 'Error creating wishlist share. Please try again.',
     'error-adding-to-wishlist' => 'Error adding product to wishlist. Please try again.',
-    
+
     // Default values
     'default-title' => ':name\'s Wishlist',
-    
+
     // Shared wishlist page
     'shared-by' => 'Shared by',
     'created-on' => 'Created on',

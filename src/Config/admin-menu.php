@@ -2,10 +2,10 @@
 
 return [
     [
-        'key'   => 'wishlistshare',
-        'name'  => 'WishlistShare',
+        'key' => 'wishlistshare',
+        'name' => 'WishlistShare',
         'route' => 'admin.wishlistshare.index',
-        'sort'  => 2,
-        'icon'  => 'temp-icon',
-    ]
+        'sort' => 2,
+        'icon' => 'temp-icon',
+    ],
 ];

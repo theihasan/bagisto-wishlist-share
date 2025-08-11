@@ -7,7 +7,7 @@ return [
     'wishlist-shares' => 'Wishlist Shares',
     'analytics' => 'Analytics',
     'shares' => 'Shares',
-    
+
     // Analytics Dashboard
     'total-shares' => 'Total Shares',
     'total-views' => 'Total Views',
@@ -25,7 +25,7 @@ return [
     'cleanup-expired' => 'Cleanup Expired',
     'view-all-shares' => 'View All Shares',
     'view-analytics' => 'View Analytics',
-    
+
     // Table Headers
     'title' => 'Title',
     'customer' => 'Customer',
@@ -37,14 +37,14 @@ return [
     'actions' => 'Actions',
     'date' => 'Date',
     'shares' => 'Shares',
-    
+
     // Status Labels
     'active' => 'Active',
     'expired' => 'Expired',
     'private' => 'Private',
     'never' => 'Never',
     'untitled' => 'Untitled',
-    
+
     // Filters and Search
     'search' => 'Search',
     'search-placeholder' => 'Search by title, customer name or email...',
@@ -54,7 +54,7 @@ return [
     'filter' => 'Filter',
     'reset' => 'Reset',
     'shares-list' => 'Shares List',
-    
+
     // Actions
     'view' => 'View',
     'view-details' => 'View Details',
@@ -68,7 +68,7 @@ return [
     'download-qr' => 'Download QR Code',
     'edit-product' => 'Edit Product',
     'view-customer' => 'View Customer',
-    
+
     // Share Details
     'share-details' => 'Share Details',
     'share-information' => 'Share Information',
@@ -85,7 +85,7 @@ return [
     'days-active' => 'Days Active',
     'days-remaining' => 'Days Remaining',
     'customer-since' => 'Customer Since',
-    
+
     // Messages
     'no-shares-found' => 'No shares found',
     'no-shares-description' => 'No wishlist shares have been created yet.',
@@ -94,44 +94,44 @@ return [
     'no-shares-selected' => 'No shares selected',
     'shared-wishlist' => 'shared a wishlist',
     'url-copied' => 'URL copied to clipboard!',
-    
+
     // Confirmations
     'confirm-delete-share' => 'Are you sure you want to delete this share?',
     'confirm-delete-shares' => 'Are you sure you want to delete',
     'confirm-cleanup-expired' => 'Are you sure you want to cleanup all expired shares? This action cannot be undone.',
-    
+
     // Success Messages
     'share-deleted-successfully' => 'Share deleted successfully',
     'shares-deleted-successfully' => ':count shares deleted successfully',
     'expired-shares-cleaned' => ':count expired shares cleaned up successfully',
-    
+
     // Error Messages
     'error-deleting-share' => 'Error deleting share',
     'error-deleting-shares' => 'Error deleting shares',
     'error-cleaning-expired-shares' => 'Error cleaning up expired shares',
     'error-occurred' => 'An error occurred. Please try again.',
-    
+
     // Chart Labels
     'shares-chart-label' => 'Shares',
     'views-chart-label' => 'Views',
-    
+
     // Platform Names
     'facebook' => 'Facebook',
     'twitter' => 'Twitter',
     'linkedin' => 'LinkedIn',
     'email' => 'Email',
     'copy-link' => 'Copy Link',
-    
+
     // Bulk Actions
     'bulk-actions' => 'Bulk Actions',
     'select-all' => 'Select All',
     'with-selected' => 'With Selected',
-    
+
     // Export
     'export-csv' => 'Export CSV',
     'export-excel' => 'Export Excel',
     'export-pdf' => 'Export PDF',
-    
+
     // Permissions
     'wishlist-share-analytics' => 'Wishlist Share Analytics',
     'wishlist-share-management' => 'Wishlist Share Management',
@@ -139,7 +139,7 @@ return [
     'manage-shares' => 'Manage Shares',
     'delete-shares' => 'Delete Shares',
     'export-analytics' => 'Export Analytics',
-    
+
     // Settings
     'settings' => 'Settings',
     'general-settings' => 'General Settings',
@@ -154,20 +154,20 @@ return [
     'enable-twitter' => 'Enable Twitter Sharing',
     'enable-linkedin' => 'Enable LinkedIn Sharing',
     'enable-email' => 'Enable Email Sharing',
-    
+
     // Validation Messages
     'title-required' => 'Title is required',
     'title-max-length' => 'Title cannot exceed 255 characters',
     'description-max-length' => 'Description cannot exceed 1000 characters',
     'expiry-days-min' => 'Expiry days must be at least 1',
     'expiry-days-max' => 'Expiry days cannot exceed 365',
-    
+
     // Help Text
     'analytics-help' => 'View detailed analytics about wishlist sharing activity including views, shares, and platform statistics.',
     'shares-help' => 'Manage all wishlist shares created by customers. You can view, delete, and monitor share activity.',
     'cleanup-help' => 'Automatically remove expired shares to keep your database clean and improve performance.',
     'export-help' => 'Export analytics data to CSV format for further analysis or reporting.',
-    
+
     // Dashboard Widgets
     'widget-total-shares' => 'Total Shares',
     'widget-total-views' => 'Total Views',
@@ -175,7 +175,7 @@ return [
     'widget-top-customer' => 'Top Customer',
     'widget-most-viewed' => 'Most Viewed Share',
     'widget-recent-shares' => 'Recent Shares',
-    
+
     // Time Periods
     'today' => 'Today',
     'yesterday' => 'Yesterday',
@@ -183,19 +183,19 @@ return [
     'this-month' => 'This Month',
     'this-year' => 'This Year',
     'custom-range' => 'Custom Range',
-    
+
     // Growth Indicators
     'growth-up' => 'Growth',
     'growth-down' => 'Decline',
     'no-change' => 'No Change',
     'vs-previous-period' => 'vs previous period',
-    
+
     // Settings Page
     'save-settings' => 'Save Settings',
     'settings-saved-successfully' => 'Settings saved successfully!',
     'preview' => 'Preview',
     'preview-description' => 'See how your buttons will look with the current settings',
-    
+
     // System Configuration
     'system' => [
         'title' => 'Wishlist Share',

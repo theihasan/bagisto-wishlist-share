@@ -2,10 +2,10 @@
 
 namespace Ihasan\BagistoWishlistShare\Models;
 
+use Ihasan\BagistoWishlistShare\Contracts\WishlistShareItem as WishlistShareItemContract;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Webkul\Product\Models\ProductProxy;
-use Ihasan\BagistoWishlistShare\Contracts\WishlistShareItem as WishlistShareItemContract;
 
 class WishlistShareItem extends Model implements WishlistShareItemContract
 {

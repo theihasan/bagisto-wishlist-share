@@ -2,11 +2,11 @@
 
 namespace Ihasan\BagistoWishlistShare\Models;
 
+use Ihasan\BagistoWishlistShare\Contracts\WishlistShare as WishlistShareContract;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Webkul\Customer\Models\CustomerProxy;
-use Ihasan\BagistoWishlistShare\Contracts\WishlistShare as WishlistShareContract;
 
 class WishlistShare extends Model implements WishlistShareContract
 {
@@ -56,7 +56,7 @@ class WishlistShare extends Model implements WishlistShareContract
      */
     public function isAccessible(): bool
     {
-        return $this->is_public && !$this->isExpired();
+        return $this->is_public && ! $this->isExpired();
     }
 
     /**

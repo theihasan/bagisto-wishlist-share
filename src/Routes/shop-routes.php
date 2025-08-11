@@ -1,7 +1,7 @@
 <?php
 
-use Illuminate\Support\Facades\Route;
 use Ihasan\BagistoWishlistShare\Http\Controllers\Shop\WishlistShareController;
+use Illuminate\Support\Facades\Route;
 
 Route::group(['middleware' => ['web', 'theme', 'locale', 'currency']], function () {
     Route::prefix('customer/account')->group(function () {
@@ -23,7 +23,7 @@ Route::group(['prefix' => 'api', 'middleware' => ['api']], function () {
             Route::post('create', [WishlistShareController::class, 'apiCreate'])->name('api.wishlist-share.create');
             Route::get('my-shares', [WishlistShareController::class, 'myShares'])->name('api.wishlist-share.my-shares');
         });
-        
+
         Route::get('{token}', [WishlistShareController::class, 'apiView'])->name('api.wishlist-share.view');
     });
 });

@@ -2,11 +2,11 @@
 
 namespace Ihasan\BagistoWishlistShare\Http\Controllers\Admin;
 
-use Illuminate\Http\Request;
-use Illuminate\Http\JsonResponse;
-use Illuminate\Routing\Controller;
 use Carbon\Carbon;
 use Ihasan\BagistoWishlistShare\Repositories\WishlistShareRepository;
+use Illuminate\Http\JsonResponse;
+use Illuminate\Http\Request;
+use Illuminate\Routing\Controller;
 use Webkul\Customer\Repositories\CustomerRepository;
 
 class WishlistShareController extends Controller
@@ -21,7 +21,7 @@ class WishlistShareController extends Controller
      */
     public function index(Request $request)
     {
-        $dateRange = $request->get("date_range", "30");
+        $dateRange = $request->get('date_range', '30');
         $startDate = Carbon::now()->subDays($dateRange);
 
         $analytics = $this->getAnalyticsData($startDate);
@@ -30,13 +30,13 @@ class WishlistShareController extends Controller
         $platformStats = $this->getPlatformStats($startDate);
 
         return view(
-            "wishlist-share::admin.analytics.index",
+            'wishlist-share::admin.analytics.index',
             compact(
-                "analytics",
-                "topShares",
-                "recentShares",
-                "platformStats",
-                "dateRange",
+                'analytics',
+                'topShares',
+                'recentShares',
+                'platformStats',
+                'dateRange',
             ),
         );
     }
@@ -47,8 +47,8 @@ class WishlistShareController extends Controller
     protected function getAnalyticsData(Carbon $startDate): array
     {
         $filters = [
-            "date_from" => $startDate,
-            "date_to" => now(),
+            'date_from' => $startDate,
+            'date_to' => now(),
         ];
 
         $analytics = $this->wishlistShareRepository->getAnalyticsData($filters);
@@ -66,12 +66,12 @@ class WishlistShareController extends Controller
         );
 
         return [
-            "total_shares" => $analytics["total_shares"],
-            "total_views" => $analytics["total_views"],
-            "active_shares" => $analytics["active_shares"],
-            "expired_shares" => $analytics["expired_shares"],
-            "daily_stats" => $dailyStats,
-            "growth" => $growthData["growth"],
+            'total_shares' => $analytics['total_shares'],
+            'total_views' => $analytics['total_views'],
+            'active_shares' => $analytics['active_shares'],
+            'expired_shares' => $analytics['expired_shares'],
+            'daily_stats' => $dailyStats,
+            'growth' => $growthData['growth'],
         ];
     }
 
@@ -81,28 +81,27 @@ class WishlistShareController extends Controller
     protected function getTopShares(Carbon $startDate, int $limit = 10): array
     {
         $filters = [
-            "date_from" => $startDate,
-            "date_to" => now(),
+            'date_from' => $startDate,
+            'date_to' => now(),
         ];
 
         return $this->wishlistShareRepository
             ->getTopPerformingShares($limit, $filters)
             ->map(function ($share) {
                 return [
-                    "id" => $share->id,
-                    "title" => $share->title,
-                    "customer_name" =>
-                        $share->customer->first_name .
-                        " " .
+                    'id' => $share->id,
+                    'title' => $share->title,
+                    'customer_name' => $share->customer->first_name.
+                        ' '.
                         $share->customer->last_name,
-                    "customer_email" => $share->customer->email,
-                    "view_count" => $share->view_count,
-                    "items_count" => $share->items->count(),
-                    "created_at" => $share->created_at,
-                    "expires_at" => $share->expires_at,
-                    "is_public" => $share->is_public,
-                    "share_url" => route(
-                        "wishlist-share.view",
+                    'customer_email' => $share->customer->email,
+                    'view_count' => $share->view_count,
+                    'items_count' => $share->items->count(),
+                    'created_at' => $share->created_at,
+                    'expires_at' => $share->expires_at,
+                    'is_public' => $share->is_public,
+                    'share_url' => route(
+                        'wishlist-share.view',
                         $share->share_token,
                     ),
                 ];
@@ -119,19 +118,18 @@ class WishlistShareController extends Controller
             ->getRecentActivity($limit)
             ->map(function ($share) {
                 return [
-                    "id" => $share->id,
-                    "title" => $share->title,
-                    "customer_name" =>
-                        $share->customer->first_name .
-                        " " .
+                    'id' => $share->id,
+                    'title' => $share->title,
+                    'customer_name' => $share->customer->first_name.
+                        ' '.
                         $share->customer->last_name,
-                    "customer_email" => $share->customer->email,
-                    "view_count" => $share->view_count,
-                    "items_count" => $share->items->count(),
-                    "created_at" => $share->created_at,
-                    "expires_at" => $share->expires_at,
-                    "is_public" => $share->is_public,
-                    "share_token" => $share->share_token,
+                    'customer_email' => $share->customer->email,
+                    'view_count' => $share->view_count,
+                    'items_count' => $share->items->count(),
+                    'created_at' => $share->created_at,
+                    'expires_at' => $share->expires_at,
+                    'is_public' => $share->is_public,
+                    'share_token' => $share->share_token,
                 ];
             })
             ->toArray();
@@ -143,8 +141,8 @@ class WishlistShareController extends Controller
     protected function getPlatformStats(Carbon $startDate): array
     {
         $filters = [
-            "date_from" => $startDate,
-            "date_to" => now(),
+            'date_from' => $startDate,
+            'date_to' => now(),
         ];
 
         return $this->wishlistShareRepository->getPlatformStatistics($filters);
@@ -155,14 +153,14 @@ class WishlistShareController extends Controller
      */
     public function analytics(Request $request): JsonResponse
     {
-        $dateRange = $request->get("date_range", "30");
+        $dateRange = $request->get('date_range', '30');
         $startDate = Carbon::now()->subDays($dateRange);
 
         $analytics = $this->getAnalyticsData($startDate);
 
         return response()->json([
-            "success" => true,
-            "data" => $analytics,
+            'success' => true,
+            'data' => $analytics,
         ]);
     }
 
@@ -174,20 +172,20 @@ class WishlistShareController extends Controller
         $filters = [];
 
         // Apply filters
-        if ($request->has("search")) {
-            $filters["search"] = $request->get("search");
+        if ($request->has('search')) {
+            $filters['search'] = $request->get('search');
         }
 
-        if ($request->has("status")) {
-            $filters["status"] = $request->get("status");
+        if ($request->has('status')) {
+            $filters['status'] = $request->get('status');
         }
 
-        if ($request->has("date_from")) {
-            $filters["date_from"] = $request->get("date_from");
+        if ($request->has('date_from')) {
+            $filters['date_from'] = $request->get('date_from');
         }
 
-        if ($request->has("date_to")) {
-            $filters["date_to"] = $request->get("date_to");
+        if ($request->has('date_to')) {
+            $filters['date_to'] = $request->get('date_to');
         }
 
         $shares = $this->wishlistShareRepository->getFilteredShares(
@@ -195,7 +193,7 @@ class WishlistShareController extends Controller
             20,
         );
 
-        return view("wishlist-share::admin.shares.index", compact("shares"));
+        return view('wishlist-share::admin.shares.index', compact('shares'));
     }
 
     /**
@@ -204,10 +202,10 @@ class WishlistShareController extends Controller
     public function show(int $id)
     {
         $share = $this->wishlistShareRepository
-            ->with(["customer", "items.product"])
+            ->with(['customer', 'items.product'])
             ->findOrFail($id);
 
-        return view("wishlist-share::admin.shares.show", compact("share"));
+        return view('wishlist-share::admin.shares.show', compact('share'));
     }
 
     /**
@@ -220,17 +218,17 @@ class WishlistShareController extends Controller
             $this->wishlistShareRepository->delete($id);
 
             return response()->json([
-                "success" => true,
-                "message" => trans(
-                    "wishlist-share::admin.share-deleted-successfully",
+                'success' => true,
+                'message' => trans(
+                    'wishlist-share::admin.share-deleted-successfully',
                 ),
             ]);
         } catch (\Exception $e) {
             return response()->json(
                 [
-                    "success" => false,
-                    "message" => trans(
-                        "wishlist-share::admin.error-deleting-share",
+                    'success' => false,
+                    'message' => trans(
+                        'wishlist-share::admin.error-deleting-share',
                     ),
                 ],
                 500,
@@ -244,14 +242,14 @@ class WishlistShareController extends Controller
     public function bulkDestroy(Request $request): JsonResponse
     {
         try {
-            $ids = $request->get("ids", []);
+            $ids = $request->get('ids', []);
 
             if (empty($ids)) {
                 return response()->json(
                     [
-                        "success" => false,
-                        "message" => trans(
-                            "wishlist-share::admin.no-shares-selected",
+                        'success' => false,
+                        'message' => trans(
+                            'wishlist-share::admin.no-shares-selected',
                         ),
                     ],
                     400,
@@ -263,18 +261,18 @@ class WishlistShareController extends Controller
             }
 
             return response()->json([
-                "success" => true,
-                "message" => trans(
-                    "wishlist-share::admin.shares-deleted-successfully",
-                    ["count" => count($ids)],
+                'success' => true,
+                'message' => trans(
+                    'wishlist-share::admin.shares-deleted-successfully',
+                    ['count' => count($ids)],
                 ),
             ]);
         } catch (\Exception $e) {
             return response()->json(
                 [
-                    "success" => false,
-                    "message" => trans(
-                        "wishlist-share::admin.error-deleting-shares",
+                    'success' => false,
+                    'message' => trans(
+                        'wishlist-share::admin.error-deleting-shares',
                     ),
                 ],
                 500,
@@ -291,18 +289,18 @@ class WishlistShareController extends Controller
             $count = $this->wishlistShareRepository->cleanupExpiredShares();
 
             return response()->json([
-                "success" => true,
-                "message" => trans(
-                    "wishlist-share::admin.expired-shares-cleaned",
-                    ["count" => $count],
+                'success' => true,
+                'message' => trans(
+                    'wishlist-share::admin.expired-shares-cleaned',
+                    ['count' => $count],
                 ),
             ]);
         } catch (\Exception $e) {
             return response()->json(
                 [
-                    "success" => false,
-                    "message" => trans(
-                        "wishlist-share::admin.error-cleaning-expired-shares",
+                    'success' => false,
+                    'message' => trans(
+                        'wishlist-share::admin.error-cleaning-expired-shares',
                     ),
                 ],
                 500,
@@ -315,40 +313,40 @@ class WishlistShareController extends Controller
      */
     public function export(Request $request)
     {
-        $dateRange = $request->get("date_range", "30");
+        $dateRange = $request->get('date_range', '30');
         $startDate = Carbon::now()->subDays($dateRange);
 
         $filters = [
-            "date_from" => $startDate,
-            "date_to" => now(),
+            'date_from' => $startDate,
+            'date_to' => now(),
         ];
 
         $shares = $this->wishlistShareRepository
             ->getFilteredShares($filters, 1000)
             ->items();
 
-        $filename = "wishlist-shares-" . now()->format("Y-m-d") . ".csv";
+        $filename = 'wishlist-shares-'.now()->format('Y-m-d').'.csv';
 
         $headers = [
-            "Content-Type" => "text/csv",
-            "Content-Disposition" => "attachment; filename=\"{$filename}\"",
+            'Content-Type' => 'text/csv',
+            'Content-Disposition' => "attachment; filename=\"{$filename}\"",
         ];
 
         $callback = function () use ($shares) {
-            $file = fopen("php://output", "w");
+            $file = fopen('php://output', 'w');
 
             // CSV headers
             fputcsv($file, [
-                "ID",
-                "Title",
-                "Customer Name",
-                "Customer Email",
-                "Items Count",
-                "View Count",
-                "Is Public",
-                "Created At",
-                "Expires At",
-                "Share URL",
+                'ID',
+                'Title',
+                'Customer Name',
+                'Customer Email',
+                'Items Count',
+                'View Count',
+                'Is Public',
+                'Created At',
+                'Expires At',
+                'Share URL',
             ]);
 
             // CSV data
@@ -356,18 +354,18 @@ class WishlistShareController extends Controller
                 fputcsv($file, [
                     $share->id,
                     $share->title,
-                    $share->customer->first_name .
-                    " " .
+                    $share->customer->first_name.
+                    ' '.
                     $share->customer->last_name,
                     $share->customer->email,
                     $share->items->count(),
                     $share->view_count,
-                    $share->is_public ? "Yes" : "No",
-                    $share->created_at->format("Y-m-d H:i:s"),
+                    $share->is_public ? 'Yes' : 'No',
+                    $share->created_at->format('Y-m-d H:i:s'),
                     $share->expires_at
-                        ? $share->expires_at->format("Y-m-d H:i:s")
-                        : "Never",
-                    route("wishlist-share.view", $share->share_token),
+                        ? $share->expires_at->format('Y-m-d H:i:s')
+                        : 'Never',
+                    route('wishlist-share.view', $share->share_token),
                 ]);
             }
 

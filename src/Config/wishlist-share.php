@@ -2,7 +2,7 @@
 
 return [
     'enabled' => true,
-    
+
     'social_platforms' => [
         'facebook' => [
             'enabled' => true,
@@ -21,13 +21,13 @@ return [
             'subject' => 'Check out my wishlist',
         ],
     ],
-    
+
     'qr_code' => [
         'enabled' => true,
         'size' => 200,
         'margin' => 10,
     ],
-    
+
     'share_token' => [
         'length' => 32,
         'expires_in_days' => 30,

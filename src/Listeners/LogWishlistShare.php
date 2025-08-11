@@ -2,8 +2,8 @@
 
 namespace Ihasan\BagistoWishlistShare\Listeners;
 
-use Illuminate\Support\Facades\Log;
 use Ihasan\BagistoWishlistShare\Events\WishlistShared;
+use Illuminate\Support\Facades\Log;
 
 class LogWishlistShare
 {

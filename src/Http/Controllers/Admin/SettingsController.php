@@ -2,8 +2,8 @@
 
 namespace Ihasan\BagistoWishlistShare\Http\Controllers\Admin;
 
-use Illuminate\Http\Request;
 use Illuminate\Http\JsonResponse;
+use Illuminate\Http\Request;
 use Webkul\Admin\Http\Controllers\Controller;
 use Webkul\Core\Repositories\CoreConfigRepository;
 
@@ -76,7 +76,7 @@ class SettingsController extends Controller
 
         return response()->json([
             'message' => trans('wishlist-share::admin.settings-saved-successfully'),
-            'redirect_url' => route('admin.wishlist-share.settings.index')
+            'redirect_url' => route('admin.wishlist-share.settings.index'),
         ]);
     }
 }

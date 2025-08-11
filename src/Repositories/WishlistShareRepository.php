@@ -2,8 +2,8 @@
 
 namespace Ihasan\BagistoWishlistShare\Repositories;
 
-use Webkul\Core\Eloquent\Repository;
 use Ihasan\BagistoWishlistShare\Models\WishlistShare;
+use Webkul\Core\Eloquent\Repository;
 
 class WishlistShareRepository extends Repository
 {
@@ -20,7 +20,7 @@ class WishlistShareRepository extends Repository
      */
     public function findByToken(string $token): ?WishlistShare
     {
-        return $this->findOneWhere(["share_token" => $token]);
+        return $this->findOneWhere(['share_token' => $token]);
     }
 
     /**
@@ -28,14 +28,14 @@ class WishlistShareRepository extends Repository
      */
     public function getActiveSharesForCustomer(int $customerId)
     {
-        return $this->where("customer_id", $customerId)
-            ->where("is_public", true)
+        return $this->where('customer_id', $customerId)
+            ->where('is_public', true)
             ->where(function ($query) {
                 $query
-                    ->whereNull("expires_at")
-                    ->orWhere("expires_at", ">", now());
+                    ->whereNull('expires_at')
+                    ->orWhere('expires_at', '>', now());
             })
-            ->orderBy("created_at", "desc")
+            ->orderBy('created_at', 'desc')
             ->get();
     }
 
@@ -44,7 +44,7 @@ class WishlistShareRepository extends Repository
      */
     public function cleanupExpiredShares(): int
     {
-        return $this->model->where("expires_at", "<", now())->delete();
+        return $this->model->where('expires_at', '<', now())->delete();
     }
 
     /**
@@ -55,24 +55,24 @@ class WishlistShareRepository extends Repository
         $query = $this->model->query();
 
         // Apply date filters
-        if (isset($filters["date_from"])) {
-            $query->where("created_at", ">=", $filters["date_from"]);
+        if (isset($filters['date_from'])) {
+            $query->where('created_at', '>=', $filters['date_from']);
         }
 
-        if (isset($filters["date_to"])) {
-            $query->where("created_at", "<=", $filters["date_to"]);
+        if (isset($filters['date_to'])) {
+            $query->where('created_at', '<=', $filters['date_to']);
         }
 
         $totalShares = $query->count();
-        $totalViews = $query->sum("view_count");
+        $totalViews = $query->sum('view_count');
         $activeShares = $this->getActiveSharesCount();
         $expiredShares = $this->getExpiredSharesCount();
 
         return [
-            "total_shares" => $totalShares,
-            "total_views" => $totalViews,
-            "active_shares" => $activeShares,
-            "expired_shares" => $expiredShares,
+            'total_shares' => $totalShares,
+            'total_views' => $totalViews,
+            'active_shares' => $activeShares,
+            'expired_shares' => $expiredShares,
         ];
     }
 
@@ -82,11 +82,11 @@ class WishlistShareRepository extends Repository
     public function getActiveSharesCount(): int
     {
         return $this->model
-            ->where("is_public", true)
+            ->where('is_public', true)
             ->where(function ($query) {
                 $query
-                    ->whereNull("expires_at")
-                    ->orWhere("expires_at", ">", now());
+                    ->whereNull('expires_at')
+                    ->orWhere('expires_at', '>', now());
             })
             ->count();
     }
@@ -96,7 +96,7 @@ class WishlistShareRepository extends Repository
      */
     public function getExpiredSharesCount(): int
     {
-        return $this->model->where("expires_at", "<", now())->count();
+        return $this->model->where('expires_at', '<', now())->count();
     }
 
     /**
@@ -106,18 +106,18 @@ class WishlistShareRepository extends Repository
         int $limit = 10,
         array $filters = [],
     ): \Illuminate\Database\Eloquent\Collection {
-        $query = $this->model->with(["customer", "items"]);
+        $query = $this->model->with(['customer', 'items']);
 
         // Apply date filters
-        if (isset($filters["date_from"])) {
-            $query->where("created_at", ">=", $filters["date_from"]);
+        if (isset($filters['date_from'])) {
+            $query->where('created_at', '>=', $filters['date_from']);
         }
 
-        if (isset($filters["date_to"])) {
-            $query->where("created_at", "<=", $filters["date_to"]);
+        if (isset($filters['date_to'])) {
+            $query->where('created_at', '<=', $filters['date_to']);
         }
 
-        return $query->orderBy("view_count", "desc")->limit($limit)->get();
+        return $query->orderBy('view_count', 'desc')->limit($limit)->get();
     }
 
     /**
@@ -133,15 +133,15 @@ class WishlistShareRepository extends Repository
         ');
 
         // Apply date filters
-        if (isset($filters["date_from"])) {
-            $query->where("created_at", ">=", $filters["date_from"]);
+        if (isset($filters['date_from'])) {
+            $query->where('created_at', '>=', $filters['date_from']);
         }
 
-        if (isset($filters["date_to"])) {
-            $query->where("created_at", "<=", $filters["date_to"]);
+        if (isset($filters['date_to'])) {
+            $query->where('created_at', '<=', $filters['date_to']);
         }
 
-        return $query->groupBy("date")->orderBy("date")->get();
+        return $query->groupBy('date')->orderBy('date')->get();
     }
 
     /**
@@ -149,25 +149,25 @@ class WishlistShareRepository extends Repository
      */
     public function getPlatformStatistics(array $filters = []): array
     {
-        $query = $this->model->whereNotNull("shared_platforms");
+        $query = $this->model->whereNotNull('shared_platforms');
 
         // Apply date filters
-        if (isset($filters["date_from"])) {
-            $query->where("created_at", ">=", $filters["date_from"]);
+        if (isset($filters['date_from'])) {
+            $query->where('created_at', '>=', $filters['date_from']);
         }
 
-        if (isset($filters["date_to"])) {
-            $query->where("created_at", "<=", $filters["date_to"]);
+        if (isset($filters['date_to'])) {
+            $query->where('created_at', '<=', $filters['date_to']);
         }
 
         $shares = $query->get();
 
         $platformCounts = [
-            "facebook" => 0,
-            "twitter" => 0,
-            "linkedin" => 0,
-            "email" => 0,
-            "copy" => 0,
+            'facebook' => 0,
+            'twitter' => 0,
+            'linkedin' => 0,
+            'email' => 0,
+            'copy' => 0,
         ];
 
         foreach ($shares as $share) {
@@ -191,23 +191,23 @@ class WishlistShareRepository extends Repository
      */
     public function getCustomerStatistics(int $customerId): array
     {
-        $totalShares = $this->where("customer_id", $customerId)->count();
-        $totalViews = $this->where("customer_id", $customerId)->sum(
-            "view_count",
+        $totalShares = $this->where('customer_id', $customerId)->count();
+        $totalViews = $this->where('customer_id', $customerId)->sum(
+            'view_count',
         );
-        $activeShares = $this->where("customer_id", $customerId)
-            ->where("is_public", true)
+        $activeShares = $this->where('customer_id', $customerId)
+            ->where('is_public', true)
             ->where(function ($query) {
                 $query
-                    ->whereNull("expires_at")
-                    ->orWhere("expires_at", ">", now());
+                    ->whereNull('expires_at')
+                    ->orWhere('expires_at', '>', now());
             })
             ->count();
 
         return [
-            "total_shares" => $totalShares,
-            "total_views" => $totalViews,
-            "active_shares" => $activeShares,
+            'total_shares' => $totalShares,
+            'total_views' => $totalViews,
+            'active_shares' => $activeShares,
         ];
     }
 
@@ -216,55 +216,55 @@ class WishlistShareRepository extends Repository
      */
     public function getFilteredShares(array $filters = [], int $perPage = 20)
     {
-        $query = $this->model->with(["customer", "items"]);
+        $query = $this->model->with(['customer', 'items']);
 
         // Search filter
-        if (!empty($filters["search"])) {
-            $search = $filters["search"];
+        if (! empty($filters['search'])) {
+            $search = $filters['search'];
             $query->where(function ($q) use ($search) {
-                $q->where("title", "like", "%{$search}%")->orWhereHas(
-                    "customer",
+                $q->where('title', 'like', "%{$search}%")->orWhereHas(
+                    'customer',
                     function ($customerQuery) use ($search) {
                         $customerQuery
-                            ->where("first_name", "like", "%{$search}%")
-                            ->orWhere("last_name", "like", "%{$search}%")
-                            ->orWhere("email", "like", "%{$search}%");
+                            ->where('first_name', 'like', "%{$search}%")
+                            ->orWhere('last_name', 'like', "%{$search}%")
+                            ->orWhere('email', 'like', "%{$search}%");
                     },
                 );
             });
         }
 
         // Status filter
-        if (!empty($filters["status"])) {
-            switch ($filters["status"]) {
-                case "active":
-                    $query->where("is_public", true)->where(function ($q) {
-                        $q->whereNull("expires_at")->orWhere(
-                            "expires_at",
-                            ">",
+        if (! empty($filters['status'])) {
+            switch ($filters['status']) {
+                case 'active':
+                    $query->where('is_public', true)->where(function ($q) {
+                        $q->whereNull('expires_at')->orWhere(
+                            'expires_at',
+                            '>',
                             now(),
                         );
                     });
                     break;
-                case "expired":
-                    $query->where("expires_at", "<", now());
+                case 'expired':
+                    $query->where('expires_at', '<', now());
                     break;
-                case "private":
-                    $query->where("is_public", false);
+                case 'private':
+                    $query->where('is_public', false);
                     break;
             }
         }
 
         // Date filters
-        if (!empty($filters["date_from"])) {
-            $query->where("created_at", ">=", $filters["date_from"]);
+        if (! empty($filters['date_from'])) {
+            $query->where('created_at', '>=', $filters['date_from']);
         }
 
-        if (!empty($filters["date_to"])) {
-            $query->where("created_at", "<=", $filters["date_to"]);
+        if (! empty($filters['date_to'])) {
+            $query->where('created_at', '<=', $filters['date_to']);
         }
 
-        return $query->orderBy("created_at", "desc")->paginate($perPage);
+        return $query->orderBy('created_at', 'desc')->paginate($perPage);
     }
 
     /**
@@ -274,8 +274,8 @@ class WishlistShareRepository extends Repository
         int $limit = 15,
     ): \Illuminate\Database\Eloquent\Collection {
         return $this->model
-            ->with(["customer", "items"])
-            ->orderBy("created_at", "desc")
+            ->with(['customer', 'items'])
+            ->orderBy('created_at', 'desc')
             ->limit($limit)
             ->get();
     }
@@ -292,33 +292,33 @@ class WishlistShareRepository extends Repository
 
         // Current period stats
         $currentShares = $this->model
-            ->whereBetween("created_at", [
+            ->whereBetween('created_at', [
                 $currentPeriodStart,
                 $currentPeriodEnd,
             ])
             ->count();
 
         $currentViews = $this->model
-            ->whereBetween("created_at", [
+            ->whereBetween('created_at', [
                 $currentPeriodStart,
                 $currentPeriodEnd,
             ])
-            ->sum("view_count");
+            ->sum('view_count');
 
         // Previous period stats
         $previousShares = $this->model
-            ->whereBetween("created_at", [
+            ->whereBetween('created_at', [
                 $previousPeriodStart,
                 $previousPeriodEnd,
             ])
             ->count();
 
         $previousViews = $this->model
-            ->whereBetween("created_at", [
+            ->whereBetween('created_at', [
                 $previousPeriodStart,
                 $previousPeriodEnd,
             ])
-            ->sum("view_count");
+            ->sum('view_count');
 
         // Calculate growth percentages
         $sharesGrowth =
@@ -336,17 +336,17 @@ class WishlistShareRepository extends Repository
                     : 0);
 
         return [
-            "current" => [
-                "shares" => $currentShares,
-                "views" => $currentViews,
+            'current' => [
+                'shares' => $currentShares,
+                'views' => $currentViews,
             ],
-            "previous" => [
-                "shares" => $previousShares,
-                "views" => $previousViews,
+            'previous' => [
+                'shares' => $previousShares,
+                'views' => $previousViews,
             ],
-            "growth" => [
-                "shares" => round($sharesGrowth, 1),
-                "views" => round($viewsGrowth, 1),
+            'growth' => [
+                'shares' => round($sharesGrowth, 1),
+                'views' => round($viewsGrowth, 1),
             ],
         ];
     }
