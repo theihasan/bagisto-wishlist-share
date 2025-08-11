@@ -1,7 +1,7 @@
 # Bagisto Wishlist Share Package
 
 [![Latest Version on Packagist](https://img.shields.io/packagist/v/theihasan/bagisto-wishlist-share.svg?style=flat-square)](https://packagist.org/packages/theihasan/bagisto-wishlist-share)
-[![GitHub Tests Action Status](https://img.shields.io/github/actions/workflow/status/theihasan/bagisto-wishlist-share/tests.yml?branch=main&label=tests&style=flat-square)](https://github.com/theihasan/bagisto-wishlist-share/actions?query=workflow%3Atests+branch%3Amain)
+[![GitHub Tests Action Status](https://img.shields.io/github/actions/workflow/status/theihasan/bagisto-wishlist-share/basic-check.yml?branch=main&label=basic%20check&style=flat-square)](https://github.com/theihasan/bagisto-wishlist-share/actions?query=workflow%3Atests+branch%3Amain)
 [![GitHub Code Style Action Status](https://img.shields.io/github/actions/workflow/status/theihasan/bagisto-wishlist-share/fix-php-code-style-issues.yml?branch=main&label=code%20style&style=flat-square)](https://github.com/theihasan/bagisto-wishlist-share/actions?query=workflow%3A"Fix+PHP+code+style+issues"+branch%3Amain)
 [![Total Downloads](https://img.shields.io/packagist/dt/theihasan/bagisto-wishlist-share.svg?style=flat-square)](https://packagist.org/packages/theihasan/bagisto-wishlist-share)
 [![License](https://img.shields.io/packagist/l/theihasan/bagisto-wishlist-share.svg?style=flat-square)](https://packagist.org/packages/theihasan/bagisto-wishlist-share)
