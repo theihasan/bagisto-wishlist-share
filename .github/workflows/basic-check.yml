@@ -1,0 +1,64 @@
+name: Basic Package Check
+
+on:
+  push:
+    branches: [ main ]
+  pull_request:
+    branches: [ main ]
+
+jobs:
+  basic-check:
+    runs-on: ubuntu-22.04
+    name: Basic Package Validation
+
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v4
+
+    - name: Check PHP syntax
+      run: |
+        find src -name "*.php" -exec php -l {} \; | grep -v "No syntax errors"
+        if [ $? -eq 0 ]; then
+          echo "✗ PHP syntax errors found"
+          exit 1
+        else
+          echo "✓ No PHP syntax errors found"
+        fi
+
+    - name: Validate composer.json
+      run: |
+        if command -v composer &> /dev/null; then
+          composer validate --strict
+        else
+          echo "Composer not available, checking JSON syntax manually"
+          php -r "json_decode(file_get_contents('composer.json'), true, 512, JSON_THROW_ON_ERROR); echo 'composer.json is valid JSON';"
+        fi
+
+    - name: Check required files exist
+      run: |
+        echo "Checking required files..."
+        files=("README.md" "LICENSE" "composer.json" "src/Providers/WishlistShareServiceProvider.php")
+        for file in "${files[@]}"; do
+          if [ -f "$file" ]; then
+            echo "✓ $file exists"
+          else
+            echo "✗ $file is missing"
+            exit 1
+          fi
+        done
+
+    - name: Check directory structure
+      run: |
+        echo "Checking directory structure..."
+        dirs=("src" "src/Config" "src/Models" "src/Http" "src/Resources" "tests")
+        for dir in "${dirs[@]}"; do
+          if [ -d "$dir" ]; then
+            echo "✓ $dir directory exists"
+          else
+            echo "✗ $dir directory is missing"
+            exit 1
+          fi
+        done
+
+    - name: Package validation complete
+      run: echo "🎉 Basic package validation passed!"

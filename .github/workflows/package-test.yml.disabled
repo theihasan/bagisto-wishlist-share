@@ -1,0 +1,55 @@
+name: Package Installation Test
+
+on:
+  push:
+    branches: [ main ]
+  pull_request:
+    branches: [ main ]
+
+jobs:
+  installation-test:
+    runs-on: ubuntu-22.04
+    name: Test Package Installation
+
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v4
+
+    - name: Setup PHP
+      uses: shivammathur/setup-php@v2
+      with:
+        php-version: 8.2
+        extensions: dom, curl, libxml, mbstring, zip, pcntl, pdo, sqlite, pdo_sqlite, bcmath, soap, intl, gd, exif, iconv
+        coverage: none
+        tools: composer:v2
+
+    - name: Validate composer.json
+      run: composer validate --strict
+
+    - name: Install dependencies
+      run: composer install --prefer-dist --no-interaction --no-progress
+
+    - name: Check autoloading
+      run: composer dump-autoload --optimize
+
+    - name: Run unit tests only
+      run: |
+        if [ -d "tests/Unit" ] && [ -f "vendor/bin/phpunit" ]; then
+          vendor/bin/phpunit tests/Unit/ --verbose --no-coverage
+        else
+          echo "Unit tests not found or PHPUnit not available"
+        fi
+
+    - name: Check if package classes can be loaded
+      run: |
+        php -r "
+        require 'vendor/autoload.php';
+        echo 'Testing class loading...' . PHP_EOL;
+        if (class_exists('Ihasan\\\\BagistoWishlistShare\\\\Providers\\\\WishlistShareServiceProvider')) {
+            echo '✓ WishlistShareServiceProvider can be loaded' . PHP_EOL;
+        } else {
+            echo '✗ WishlistShareServiceProvider cannot be loaded' . PHP_EOL;
+            exit(1);
+        }
+        echo 'Package installation test passed!' . PHP_EOL;
+        "
