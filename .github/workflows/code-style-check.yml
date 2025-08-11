@@ -1,0 +1,55 @@
+name: Code Style Check
+
+on:
+  push:
+    branches: [ main ]
+    paths:
+      - '**.php'
+  pull_request:
+    branches: [ main, develop ]
+    paths:
+      - '**.php'
+
+jobs:
+  code-style:
+    runs-on: ubuntu-latest
+    name: Check Code Style
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Setup PHP
+        uses: shivammathur/setup-php@v2
+        with:
+          php-version: '8.2'
+          extensions: dom, curl, libxml, mbstring, zip, pcntl, pdo, sqlite, pdo_sqlite, bcmath, soap, intl, gd, exif, iconv
+          coverage: none
+          tools: composer:v2
+
+      - name: Cache Composer packages
+        uses: actions/cache@v3
+        with:
+          path: ~/.composer/cache/files
+          key: ${{ runner.os }}-composer-${{ hashFiles('**/composer.lock') }}
+          restore-keys: |
+            ${{ runner.os }}-composer-
+
+      - name: Install Dependencies
+        run: composer install --prefer-dist --no-interaction --no-progress
+
+      - name: Check code style with Laravel Pint
+        run: ./vendor/bin/pint --test --verbose
+
+      - name: Code style check passed
+        if: success()
+        run: echo "✅ Code style is consistent with Laravel Pint standards"
+
+      - name: Code style issues found
+        if: failure()
+        run: |
+          echo "❌ Code style issues found. Please run the following command locally:"
+          echo "composer pint"
+          echo ""
+          echo "Or run this command to see what would be fixed:"
+          echo "composer pint-test"
