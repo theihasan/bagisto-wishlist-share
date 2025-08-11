@@ -3,8 +3,8 @@
 namespace Ihasan\BagistoWishlistShare\Tests;
 
 use Ihasan\BagistoWishlistShare\Providers\WishlistShareServiceProvider;
-use Orchestra\Testbench\TestCase as Orchestra;
 use Illuminate\Foundation\Testing\RefreshDatabase;
+use Orchestra\Testbench\TestCase as Orchestra;
 
 class TestCase extends Orchestra
 {
@@ -16,7 +16,7 @@ class TestCase extends Orchestra
 
         // Create customers table for foreign key constraint
         $this->createCustomersTable();
-        
+
         $this->loadMigrationsFrom(__DIR__.'/../src/Database/Migrations');
     }
 

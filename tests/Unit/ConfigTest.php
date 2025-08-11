@@ -21,7 +21,7 @@ class ConfigTest extends TestCase
     public function it_has_qr_code_configuration()
     {
         $qrConfig = config('wishlist-share.qr_code');
-        
+
         $this->assertIsArray($qrConfig);
         $this->assertTrue($qrConfig['enabled']);
         $this->assertEquals(200, $qrConfig['size']);
@@ -32,7 +32,7 @@ class ConfigTest extends TestCase
     public function it_has_share_token_configuration()
     {
         $tokenConfig = config('wishlist-share.share_token');
-        
+
         $this->assertIsArray($tokenConfig);
         $this->assertEquals(32, $tokenConfig['length']);
         $this->assertEquals(30, $tokenConfig['expires_in_days']);

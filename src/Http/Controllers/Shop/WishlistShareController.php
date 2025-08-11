@@ -124,7 +124,7 @@ class WishlistShareController extends Controller
             ->setSize(config('wishlist-share.qr_code.size', 200))
             ->setMargin(config('wishlist-share.qr_code.margin', 10));
 
-        $writer = new PngWriter;
+        $writer = new PngWriter();
         $result = $writer->write($qrCode);
 
         return response($result->getString(), 200, [
