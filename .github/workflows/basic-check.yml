@@ -17,12 +17,24 @@ jobs:
 
     - name: Check PHP syntax
       run: |
-        find src -name "*.php" -exec php -l {} \; | grep -v "No syntax errors"
-        if [ $? -eq 0 ]; then
+        echo "Checking PHP syntax in all PHP files..."
+        syntax_errors=0
+        for file in $(find src tests -name "*.php" 2>/dev/null || true); do
+          if [ -f "$file" ]; then
+            echo "Checking $file..."
+            if ! php -l "$file" > /dev/null 2>&1; then
+              echo "✗ Syntax error in $file"
+              php -l "$file"
+              syntax_errors=1
+            fi
+          fi
+        done
+        
+        if [ $syntax_errors -eq 0 ]; then
+          echo "✓ No PHP syntax errors found"
+        else
           echo "✗ PHP syntax errors found"
           exit 1
-        else
-          echo "✓ No PHP syntax errors found"
         fi
 
     - name: Validate composer.json
