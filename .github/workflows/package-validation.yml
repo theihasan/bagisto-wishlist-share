@@ -1,0 +1,104 @@
+name: Package Validation
+
+on:
+  push:
+    branches: [ main ]
+  pull_request:
+    branches: [ main ]
+
+jobs:
+  validate:
+    runs-on: ubuntu-latest
+    name: Validate Package Structure
+
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v4
+
+    - name: Validate composer.json structure
+      run: |
+        echo "Validating composer.json..."
+        if [ ! -f "composer.json" ]; then
+          echo "✗ composer.json not found"
+          exit 1
+        fi
+        
+        # Check if it's valid JSON
+        if ! python3 -m json.tool composer.json > /dev/null 2>&1; then
+          echo "✗ composer.json is not valid JSON"
+          exit 1
+        fi
+        
+        # Check required fields
+        if ! grep -q '"name"' composer.json; then
+          echo "✗ composer.json missing 'name' field"
+          exit 1
+        fi
+        
+        if ! grep -q '"theihasan/bagisto-wishlist-share"' composer.json; then
+          echo "✗ composer.json has incorrect package name"
+          exit 1
+        fi
+        
+        echo "✓ composer.json is valid"
+
+    - name: Check essential files
+      run: |
+        echo "Checking essential files..."
+        essential_files=(
+          "README.md"
+          "LICENSE" 
+          "composer.json"
+          "src/Providers/WishlistShareServiceProvider.php"
+          "src/Models/WishlistShare.php"
+          "src/Http/Controllers/Shop/WishlistShareController.php"
+        )
+        
+        for file in "${essential_files[@]}"; do
+          if [ -f "$file" ]; then
+            echo "✓ $file exists"
+          else
+            echo "✗ $file is missing"
+            exit 1
+          fi
+        done
+
+    - name: Check directory structure
+      run: |
+        echo "Checking directory structure..."
+        required_dirs=(
+          "src"
+          "src/Config"
+          "src/Models" 
+          "src/Http"
+          "src/Http/Controllers"
+          "src/Providers"
+          "src/Resources"
+          "src/Resources/views"
+          "tests"
+        )
+        
+        for dir in "${required_dirs[@]}"; do
+          if [ -d "$dir" ]; then
+            echo "✓ $dir directory exists"
+          else
+            echo "✗ $dir directory is missing"
+            exit 1
+          fi
+        done
+
+    - name: Check package namespace
+      run: |
+        echo "Checking package namespace..."
+        if grep -r "namespace Ihasan\\\\BagistoWishlistShare" src/ > /dev/null; then
+          echo "✓ Package namespace is correct"
+        else
+          echo "✗ Package namespace not found or incorrect"
+          exit 1
+        fi
+
+    - name: Validation complete
+      run: |
+        echo "🎉 Package validation completed successfully!"
+        echo "📦 Package: theihasan/bagisto-wishlist-share"
+        echo "✅ Ready for installation via Composer"
